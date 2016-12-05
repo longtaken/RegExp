@@ -90,11 +90,13 @@ javascript中只支持顺序环视
 
 
 ##String中4种支持使用正则表达式的方法
+
 ###search---stringObject.search(regexp);
 * 它的参数是一个正则表达式，返回第一个与之匹配的子串的起始位置，如果找不到匹配的子串，返回-1
 * search的参数不是正则表达式则首先会通过RegExp构造函数将它转换成正则表达式
 * search方法不支持全局检索，忽略修饰符g
 * 没有regexp对象的lastIndex的属性，且总是从字符串开始位置进行查找，总是返回的是stringObject匹配的第一个位置
+
 ###match---stringObject.match(regexp);
 * 唯一参数是正则表达式（或者通过RegExp转换）,返回的是一个由匹配结果组成的数组
 * 如果该正则表达式设置了修饰符g，则该方法返回的数组包含字符串中所有匹配的结果
@@ -102,6 +104,7 @@ javascript中只支持顺序环视
 * 返回的数组内有三个元素，第一个元素的存放的是匹配的文本。还有二个对象属性：
 	* index属性表明的是匹配文本的起始字符在stringObject中的位置
 	* input属性声明的是对stringObject对象的引用
+	
 ###replace---stringObject.replace(regexp/substr,replacement);
 * 第一个参数是正则表达式，第二个参数是要进行替换的字符串或者一个函数
 * 如果第一个参数是字符串而不是正则表达式，replace直接搜索这个字符串
@@ -117,15 +120,17 @@ javascript中只支持顺序环视
 	* 函数的第二个参数是正则表达式分组内容，没有分组的话，就没有该参数（如果没有该参数的话那么第四个参数就是undefined）
 	* 函数的第三个参数是匹配项在字符串中的索引index
 	* 函数的第四个参数是原字符串
-	
+
 ###split---stringObject.split(separator,howmany);
 * 参数一：字符串或正则表达式，该参数指定的地方分割
 * 参数二：该参数指定返回的数组的最大长度，如果设置了该参数，返回的子字符串不会多于这个参数指定的数组。如果没有设置该参数的话，整个字符串都会被分割，不考虑他的长度
 
 ##RegExp中2个方法
+
 ###test---RegExpObject.test(str);
 * 参数是需要检测的字符串
 * 如果字符串中含有与正则匹配的文本的话，返回true，否则返回false
+
 ###exec---RegExpObject.exec(string);
 * exec方法对一个指定的字符串执行一个正则表达式，没有找到匹配返回null，找到则返回数组
 * exec带有g时，它把当前正则表达式对象的lastIndex属性设置为紧靠匹配子串的字符位置。当同一个正则表达式第二次调用exec的时候，它将从lastIndex属性所指示的字符处开始检索。没有匹配结果设置lastIndex为0
