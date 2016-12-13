@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>RegExp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui" />
+</head>
+<body onselectstart="return false">
+	<div class="main">test regexp--用chrome打开</div>
+	<script type="text/javascript">
+	(function(){
+		'use strict';
+		const reg={
+			init(){
+				this.greedy();
+				this.assert();
+				this.reverse();
+				this.group();
+			},
+			createPatDiv(pattern,str,obj,title="正则匹配",method="match"){
+				const oDiv=document.createElement("div");
+				//console.log(Object.prototype.toString.call(obj));
+
+				if(Object.prototype.toString.call(obj).toLowerCase().indexOf("array")>-1){
+					obj=JSON.stringify(obj);
+				}
+				
+	    		let innerStr="<p>--------"+title+"----------</p>";
+	    		innerStr+=("<p>"+"pattern:"+pattern+"</p>");
+	    		innerStr+=("<p>"+"str:"+str+"</p>");
+	    		innerStr+=("<p>"+"product:"+obj+"</p>");
+	    		innerStr+=("<p>"+"method:"+method+"</p>");
+	    		
+	    		oDiv.className="pattern1";
+	    		oDiv.innerHTML=innerStr;
+	    		document.body.appendChild(oDiv);
+			},
+			matchReg(pattern,str,title){
+	    		let arr=str.match(pattern);
+	    		this.createPatDiv(pattern,str,arr,title);
+	    	},
+	    	testReg(pattern,str,title){
+	    		let boo=pattern.test(str);
+	    		this.createPatDiv(pattern,str,boo,title,"test");
+	    	},
+			greedy(){//贪婪匹配
+				const title="贪婪匹配test";
+	    		let str="aa1aaa6aaa1aaaaa6";
+
+				let pattern=/1\w*6/g;
+	    		let pattern2=/1\w*?6/g;
+
+	    		this.matchReg.bind(this)(pattern,str,title);
+	    		this.matchReg.bind(this)(pattern2,str,title);
+			},
+			assert(){
+				const title="零宽正向先行断言";
+				const title2="零宽负向先行断言";
+				let str = 'java typescript scriptabc eascript';
+				let reg1 = /\b(\w+)(?=script\b)/g;//匹配以script结尾的单词的前面部分(除了ing以外的部分)
+				this.matchReg.bind(this)(reg1,str,title);
+
+				let str2 = 'java';
+				let str3 = 'javascript';
+				let reg2 = /java(?!script)/; 
+				this.testReg.bind(this)(reg2,str2,title2);
+				this.testReg.bind(this)(reg2,str3,title2);
+			},
+			group(){
+				const title="分组";	
+				let str = "abcde";
+				let reg = /(a+)((b|c|d)+)(e+)/gi;
+				console.log(str.match(reg));//输出：["ABCDE"]
+				console.log(reg.exec(str,'i'));//输出：["ABCDE", "A", "BCD", "D", "E"]
+				console.log(RegExp.$1);//输出："A"
+				console.log(RegExp.$2);//输出："BCD"
+				console.log(RegExp.$3);//输出："D"
+				console.log(RegExp.$4);//输出："E"
+
+				let str2="a&b&c";
+				let str3=str2.replace(/(a)&(b)&(c)/,"$3&$2&$1");
+				console.log(str3+"---replace str3");
+			},
+			reverse(){
+				const title="反向引用";
+				let str="'reverse'";
+				let reg=/('|")(.*?)(\1)/;
+				this.testReg.bind(this)(reg,str,title);
+
+				let str2="a bb ccc dddd eeeee ffffff";
+				let reg2=/(\w)\1{2,}/;
+				this.matchReg.bind(this)(reg2,str2,title);
+			}
+		};
+		reg.init();	    
+	})();
+    </script>
+    
+</body>
+</html>
